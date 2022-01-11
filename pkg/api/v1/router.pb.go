@@ -2099,8 +2099,8 @@ var file_router_proto_rawDesc = []byte{
 	0x54, 0x45, 0x4e, 0x54, 0x10, 0x03, 0x12, 0x0e, 0x0a, 0x0a, 0x53, 0x4c, 0x49, 0x43, 0x45, 0x5f,
 	0x44, 0x4f, 0x4e, 0x45, 0x10, 0x04, 0x12, 0x0e, 0x0a, 0x0a, 0x53, 0x4c, 0x49, 0x43, 0x45, 0x5f,
 	0x46, 0x41, 0x49, 0x4c, 0x10, 0x05, 0x12, 0x10, 0x0a, 0x0c, 0x53, 0x4c, 0x49, 0x43, 0x45, 0x5f,
-	0x52, 0x45, 0x53, 0x55, 0x4c, 0x54, 0x10, 0x06, 0x32, 0xa9, 0x04, 0x0a, 0x0d, 0x53, 0x77, 0x69,
-	0x74, 0x63, 0x68, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x4c, 0x0a, 0x10, 0x53, 0x74,
+	0x52, 0x45, 0x53, 0x55, 0x4c, 0x54, 0x10, 0x06, 0x32, 0xa9, 0x04, 0x0a, 0x0d, 0x52, 0x6f, 0x75,
+	0x74, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x4c, 0x0a, 0x10, 0x53, 0x74,
 	0x61, 0x72, 0x74, 0x4c, 0x6f, 0x63, 0x61, 0x6c, 0x45, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x12, 0x1b,
 	0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x4c, 0x6f, 0x63, 0x61, 0x6c, 0x45, 0x6e,
 	0x67, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x76, 0x31,
@@ -2214,22 +2214,22 @@ var file_router_proto_depIdxs = []int32{
 	23, // 24: v1.EngineMetadata.annotations:type_name -> v1.Annotation
 	29, // 25: v1.EngineConditions.wait_until:type_name -> google.protobuf.Timestamp
 	4,  // 26: v1.LogSliceEvent.type:type_name -> v1.LogSliceType
-	5,  // 27: v1.SwitchService.StartLocalEngine:input_type -> v1.StartLocalEngineRequest
-	8,  // 28: v1.SwitchService.StartFromPreviousEngine:input_type -> v1.StartFromPreviousEngineRequest
-	7,  // 29: v1.SwitchService.StartEngine:input_type -> v1.StartEngineRequest
-	9,  // 30: v1.SwitchService.ListEngines:input_type -> v1.ListEnginesRequest
-	14, // 31: v1.SwitchService.Subscribe:input_type -> v1.SubscribeRequest
-	16, // 32: v1.SwitchService.GetEngine:input_type -> v1.GetEngineRequest
-	18, // 33: v1.SwitchService.Listen:input_type -> v1.ListenRequest
-	27, // 34: v1.SwitchService.StopEngine:input_type -> v1.StopEngineRequest
-	6,  // 35: v1.SwitchService.StartLocalEngine:output_type -> v1.StartEngineResponse
-	6,  // 36: v1.SwitchService.StartFromPreviousEngine:output_type -> v1.StartEngineResponse
-	6,  // 37: v1.SwitchService.StartEngine:output_type -> v1.StartEngineResponse
-	13, // 38: v1.SwitchService.ListEngines:output_type -> v1.ListEnginesResponse
-	15, // 39: v1.SwitchService.Subscribe:output_type -> v1.SubscribeResponse
-	17, // 40: v1.SwitchService.GetEngine:output_type -> v1.GetEngineResponse
-	19, // 41: v1.SwitchService.Listen:output_type -> v1.ListenResponse
-	28, // 42: v1.SwitchService.StopEngine:output_type -> v1.StopEngineResponse
+	5,  // 27: v1.RouterService.StartLocalEngine:input_type -> v1.StartLocalEngineRequest
+	8,  // 28: v1.RouterService.StartFromPreviousEngine:input_type -> v1.StartFromPreviousEngineRequest
+	7,  // 29: v1.RouterService.StartEngine:input_type -> v1.StartEngineRequest
+	9,  // 30: v1.RouterService.ListEngines:input_type -> v1.ListEnginesRequest
+	14, // 31: v1.RouterService.Subscribe:input_type -> v1.SubscribeRequest
+	16, // 32: v1.RouterService.GetEngine:input_type -> v1.GetEngineRequest
+	18, // 33: v1.RouterService.Listen:input_type -> v1.ListenRequest
+	27, // 34: v1.RouterService.StopEngine:input_type -> v1.StopEngineRequest
+	6,  // 35: v1.RouterService.StartLocalEngine:output_type -> v1.StartEngineResponse
+	6,  // 36: v1.RouterService.StartFromPreviousEngine:output_type -> v1.StartEngineResponse
+	6,  // 37: v1.RouterService.StartEngine:output_type -> v1.StartEngineResponse
+	13, // 38: v1.RouterService.ListEngines:output_type -> v1.ListEnginesResponse
+	15, // 39: v1.RouterService.Subscribe:output_type -> v1.SubscribeResponse
+	17, // 40: v1.RouterService.GetEngine:output_type -> v1.GetEngineResponse
+	19, // 41: v1.RouterService.Listen:output_type -> v1.ListenResponse
+	28, // 42: v1.RouterService.StopEngine:output_type -> v1.StopEngineResponse
 	35, // [35:43] is the sub-list for method output_type
 	27, // [27:35] is the sub-list for method input_type
 	27, // [27:27] is the sub-list for extension type_name

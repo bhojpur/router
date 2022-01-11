@@ -14,10 +14,10 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// SwitchServiceClient is the client API for SwitchService service.
+// RouterServiceClient is the client API for RouterService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type SwitchServiceClient interface {
+type RouterServiceClient interface {
 	// StartLocalEngine starts a Routing Engine on the Bhojpur.NET Platform directly.
 	// The incoming requests are expected in the following order:
 	//   1. metadata
@@ -25,7 +25,7 @@ type SwitchServiceClient interface {
 	//   3. all bytes constituting the Engine YAML that will be executed (that the config.yaml points to)
 	//   4. all bytes constituting the gzipped Bhojpur.NET Platform application tar stream
 	//   5. the Bhojpur.NET Platform application tar stream done marker
-	StartLocalEngine(ctx context.Context, opts ...grpc.CallOption) (SwitchService_StartLocalEngineClient, error)
+	StartLocalEngine(ctx context.Context, opts ...grpc.CallOption) (RouterService_StartLocalEngineClient, error)
 	// StartFromPreviousEngine starts a new Engine based on a previous one.
 	// If the previous Engine does not have the can-replay condition set this call will result in an error.
 	StartFromPreviousEngine(ctx context.Context, in *StartFromPreviousEngineRequest, opts ...grpc.CallOption) (*StartEngineResponse, error)
@@ -34,47 +34,47 @@ type SwitchServiceClient interface {
 	// Searches for Engine(s) known to this Engine
 	ListEngines(ctx context.Context, in *ListEnginesRequest, opts ...grpc.CallOption) (*ListEnginesResponse, error)
 	// Subscribe listens to new Engine(s) updates
-	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (SwitchService_SubscribeClient, error)
+	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (RouterService_SubscribeClient, error)
 	// GetEngine retrieves details of a single Engine
 	GetEngine(ctx context.Context, in *GetEngineRequest, opts ...grpc.CallOption) (*GetEngineResponse, error)
 	// Listen listens to Engine updates and log output of a running Engine
-	Listen(ctx context.Context, in *ListenRequest, opts ...grpc.CallOption) (SwitchService_ListenClient, error)
+	Listen(ctx context.Context, in *ListenRequest, opts ...grpc.CallOption) (RouterService_ListenClient, error)
 	// StopEngine stops a currently running Engine
 	StopEngine(ctx context.Context, in *StopEngineRequest, opts ...grpc.CallOption) (*StopEngineResponse, error)
 }
 
-type switchServiceClient struct {
+type routerServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewSwitchServiceClient(cc grpc.ClientConnInterface) SwitchServiceClient {
-	return &switchServiceClient{cc}
+func NewRouterServiceClient(cc grpc.ClientConnInterface) RouterServiceClient {
+	return &routerServiceClient{cc}
 }
 
-func (c *switchServiceClient) StartLocalEngine(ctx context.Context, opts ...grpc.CallOption) (SwitchService_StartLocalEngineClient, error) {
-	stream, err := c.cc.NewStream(ctx, &SwitchService_ServiceDesc.Streams[0], "/v1.SwitchService/StartLocalEngine", opts...)
+func (c *routerServiceClient) StartLocalEngine(ctx context.Context, opts ...grpc.CallOption) (RouterService_StartLocalEngineClient, error) {
+	stream, err := c.cc.NewStream(ctx, &RouterService_ServiceDesc.Streams[0], "/v1.RouterService/StartLocalEngine", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &switchServiceStartLocalEngineClient{stream}
+	x := &routerServiceStartLocalEngineClient{stream}
 	return x, nil
 }
 
-type SwitchService_StartLocalEngineClient interface {
+type RouterService_StartLocalEngineClient interface {
 	Send(*StartLocalEngineRequest) error
 	CloseAndRecv() (*StartEngineResponse, error)
 	grpc.ClientStream
 }
 
-type switchServiceStartLocalEngineClient struct {
+type routerServiceStartLocalEngineClient struct {
 	grpc.ClientStream
 }
 
-func (x *switchServiceStartLocalEngineClient) Send(m *StartLocalEngineRequest) error {
+func (x *routerServiceStartLocalEngineClient) Send(m *StartLocalEngineRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *switchServiceStartLocalEngineClient) CloseAndRecv() (*StartEngineResponse, error) {
+func (x *routerServiceStartLocalEngineClient) CloseAndRecv() (*StartEngineResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -85,39 +85,39 @@ func (x *switchServiceStartLocalEngineClient) CloseAndRecv() (*StartEngineRespon
 	return m, nil
 }
 
-func (c *switchServiceClient) StartFromPreviousEngine(ctx context.Context, in *StartFromPreviousEngineRequest, opts ...grpc.CallOption) (*StartEngineResponse, error) {
+func (c *routerServiceClient) StartFromPreviousEngine(ctx context.Context, in *StartFromPreviousEngineRequest, opts ...grpc.CallOption) (*StartEngineResponse, error) {
 	out := new(StartEngineResponse)
-	err := c.cc.Invoke(ctx, "/v1.SwitchService/StartFromPreviousEngine", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RouterService/StartFromPreviousEngine", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *switchServiceClient) StartEngine(ctx context.Context, in *StartEngineRequest, opts ...grpc.CallOption) (*StartEngineResponse, error) {
+func (c *routerServiceClient) StartEngine(ctx context.Context, in *StartEngineRequest, opts ...grpc.CallOption) (*StartEngineResponse, error) {
 	out := new(StartEngineResponse)
-	err := c.cc.Invoke(ctx, "/v1.SwitchService/StartEngine", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RouterService/StartEngine", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *switchServiceClient) ListEngines(ctx context.Context, in *ListEnginesRequest, opts ...grpc.CallOption) (*ListEnginesResponse, error) {
+func (c *routerServiceClient) ListEngines(ctx context.Context, in *ListEnginesRequest, opts ...grpc.CallOption) (*ListEnginesResponse, error) {
 	out := new(ListEnginesResponse)
-	err := c.cc.Invoke(ctx, "/v1.SwitchService/ListEngines", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RouterService/ListEngines", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *switchServiceClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (SwitchService_SubscribeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &SwitchService_ServiceDesc.Streams[1], "/v1.SwitchService/Subscribe", opts...)
+func (c *routerServiceClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (RouterService_SubscribeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &RouterService_ServiceDesc.Streams[1], "/v1.RouterService/Subscribe", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &switchServiceSubscribeClient{stream}
+	x := &routerServiceSubscribeClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -127,16 +127,16 @@ func (c *switchServiceClient) Subscribe(ctx context.Context, in *SubscribeReques
 	return x, nil
 }
 
-type SwitchService_SubscribeClient interface {
+type RouterService_SubscribeClient interface {
 	Recv() (*SubscribeResponse, error)
 	grpc.ClientStream
 }
 
-type switchServiceSubscribeClient struct {
+type routerServiceSubscribeClient struct {
 	grpc.ClientStream
 }
 
-func (x *switchServiceSubscribeClient) Recv() (*SubscribeResponse, error) {
+func (x *routerServiceSubscribeClient) Recv() (*SubscribeResponse, error) {
 	m := new(SubscribeResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -144,21 +144,21 @@ func (x *switchServiceSubscribeClient) Recv() (*SubscribeResponse, error) {
 	return m, nil
 }
 
-func (c *switchServiceClient) GetEngine(ctx context.Context, in *GetEngineRequest, opts ...grpc.CallOption) (*GetEngineResponse, error) {
+func (c *routerServiceClient) GetEngine(ctx context.Context, in *GetEngineRequest, opts ...grpc.CallOption) (*GetEngineResponse, error) {
 	out := new(GetEngineResponse)
-	err := c.cc.Invoke(ctx, "/v1.SwitchService/GetEngine", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RouterService/GetEngine", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *switchServiceClient) Listen(ctx context.Context, in *ListenRequest, opts ...grpc.CallOption) (SwitchService_ListenClient, error) {
-	stream, err := c.cc.NewStream(ctx, &SwitchService_ServiceDesc.Streams[2], "/v1.SwitchService/Listen", opts...)
+func (c *routerServiceClient) Listen(ctx context.Context, in *ListenRequest, opts ...grpc.CallOption) (RouterService_ListenClient, error) {
+	stream, err := c.cc.NewStream(ctx, &RouterService_ServiceDesc.Streams[2], "/v1.RouterService/Listen", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &switchServiceListenClient{stream}
+	x := &routerServiceListenClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -168,16 +168,16 @@ func (c *switchServiceClient) Listen(ctx context.Context, in *ListenRequest, opt
 	return x, nil
 }
 
-type SwitchService_ListenClient interface {
+type RouterService_ListenClient interface {
 	Recv() (*ListenResponse, error)
 	grpc.ClientStream
 }
 
-type switchServiceListenClient struct {
+type routerServiceListenClient struct {
 	grpc.ClientStream
 }
 
-func (x *switchServiceListenClient) Recv() (*ListenResponse, error) {
+func (x *routerServiceListenClient) Recv() (*ListenResponse, error) {
 	m := new(ListenResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -185,19 +185,19 @@ func (x *switchServiceListenClient) Recv() (*ListenResponse, error) {
 	return m, nil
 }
 
-func (c *switchServiceClient) StopEngine(ctx context.Context, in *StopEngineRequest, opts ...grpc.CallOption) (*StopEngineResponse, error) {
+func (c *routerServiceClient) StopEngine(ctx context.Context, in *StopEngineRequest, opts ...grpc.CallOption) (*StopEngineResponse, error) {
 	out := new(StopEngineResponse)
-	err := c.cc.Invoke(ctx, "/v1.SwitchService/StopEngine", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RouterService/StopEngine", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// SwitchServiceServer is the server API for SwitchService service.
-// All implementations must embed UnimplementedSwitchServiceServer
+// RouterServiceServer is the server API for RouterService service.
+// All implementations must embed UnimplementedRouterServiceServer
 // for forward compatibility
-type SwitchServiceServer interface {
+type RouterServiceServer interface {
 	// StartLocalEngine starts a Routing Engine on the Bhojpur.NET Platform directly.
 	// The incoming requests are expected in the following order:
 	//   1. metadata
@@ -205,7 +205,7 @@ type SwitchServiceServer interface {
 	//   3. all bytes constituting the Engine YAML that will be executed (that the config.yaml points to)
 	//   4. all bytes constituting the gzipped Bhojpur.NET Platform application tar stream
 	//   5. the Bhojpur.NET Platform application tar stream done marker
-	StartLocalEngine(SwitchService_StartLocalEngineServer) error
+	StartLocalEngine(RouterService_StartLocalEngineServer) error
 	// StartFromPreviousEngine starts a new Engine based on a previous one.
 	// If the previous Engine does not have the can-replay condition set this call will result in an error.
 	StartFromPreviousEngine(context.Context, *StartFromPreviousEngineRequest) (*StartEngineResponse, error)
@@ -214,76 +214,76 @@ type SwitchServiceServer interface {
 	// Searches for Engine(s) known to this Engine
 	ListEngines(context.Context, *ListEnginesRequest) (*ListEnginesResponse, error)
 	// Subscribe listens to new Engine(s) updates
-	Subscribe(*SubscribeRequest, SwitchService_SubscribeServer) error
+	Subscribe(*SubscribeRequest, RouterService_SubscribeServer) error
 	// GetEngine retrieves details of a single Engine
 	GetEngine(context.Context, *GetEngineRequest) (*GetEngineResponse, error)
 	// Listen listens to Engine updates and log output of a running Engine
-	Listen(*ListenRequest, SwitchService_ListenServer) error
+	Listen(*ListenRequest, RouterService_ListenServer) error
 	// StopEngine stops a currently running Engine
 	StopEngine(context.Context, *StopEngineRequest) (*StopEngineResponse, error)
-	mustEmbedUnimplementedSwitchServiceServer()
+	mustEmbedUnimplementedRouterServiceServer()
 }
 
-// UnimplementedSwitchServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedSwitchServiceServer struct {
+// UnimplementedRouterServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedRouterServiceServer struct {
 }
 
-func (UnimplementedSwitchServiceServer) StartLocalEngine(SwitchService_StartLocalEngineServer) error {
+func (UnimplementedRouterServiceServer) StartLocalEngine(RouterService_StartLocalEngineServer) error {
 	return status.Errorf(codes.Unimplemented, "method StartLocalEngine not implemented")
 }
-func (UnimplementedSwitchServiceServer) StartFromPreviousEngine(context.Context, *StartFromPreviousEngineRequest) (*StartEngineResponse, error) {
+func (UnimplementedRouterServiceServer) StartFromPreviousEngine(context.Context, *StartFromPreviousEngineRequest) (*StartEngineResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StartFromPreviousEngine not implemented")
 }
-func (UnimplementedSwitchServiceServer) StartEngine(context.Context, *StartEngineRequest) (*StartEngineResponse, error) {
+func (UnimplementedRouterServiceServer) StartEngine(context.Context, *StartEngineRequest) (*StartEngineResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StartEngine not implemented")
 }
-func (UnimplementedSwitchServiceServer) ListEngines(context.Context, *ListEnginesRequest) (*ListEnginesResponse, error) {
+func (UnimplementedRouterServiceServer) ListEngines(context.Context, *ListEnginesRequest) (*ListEnginesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListEngines not implemented")
 }
-func (UnimplementedSwitchServiceServer) Subscribe(*SubscribeRequest, SwitchService_SubscribeServer) error {
+func (UnimplementedRouterServiceServer) Subscribe(*SubscribeRequest, RouterService_SubscribeServer) error {
 	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
 }
-func (UnimplementedSwitchServiceServer) GetEngine(context.Context, *GetEngineRequest) (*GetEngineResponse, error) {
+func (UnimplementedRouterServiceServer) GetEngine(context.Context, *GetEngineRequest) (*GetEngineResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEngine not implemented")
 }
-func (UnimplementedSwitchServiceServer) Listen(*ListenRequest, SwitchService_ListenServer) error {
+func (UnimplementedRouterServiceServer) Listen(*ListenRequest, RouterService_ListenServer) error {
 	return status.Errorf(codes.Unimplemented, "method Listen not implemented")
 }
-func (UnimplementedSwitchServiceServer) StopEngine(context.Context, *StopEngineRequest) (*StopEngineResponse, error) {
+func (UnimplementedRouterServiceServer) StopEngine(context.Context, *StopEngineRequest) (*StopEngineResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopEngine not implemented")
 }
-func (UnimplementedSwitchServiceServer) mustEmbedUnimplementedSwitchServiceServer() {}
+func (UnimplementedRouterServiceServer) mustEmbedUnimplementedRouterServiceServer() {}
 
-// UnsafeSwitchServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to SwitchServiceServer will
+// UnsafeRouterServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RouterServiceServer will
 // result in compilation errors.
-type UnsafeSwitchServiceServer interface {
-	mustEmbedUnimplementedSwitchServiceServer()
+type UnsafeRouterServiceServer interface {
+	mustEmbedUnimplementedRouterServiceServer()
 }
 
-func RegisterSwitchServiceServer(s grpc.ServiceRegistrar, srv SwitchServiceServer) {
-	s.RegisterService(&SwitchService_ServiceDesc, srv)
+func RegisterRouterServiceServer(s grpc.ServiceRegistrar, srv RouterServiceServer) {
+	s.RegisterService(&RouterService_ServiceDesc, srv)
 }
 
-func _SwitchService_StartLocalEngine_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(SwitchServiceServer).StartLocalEngine(&switchServiceStartLocalEngineServer{stream})
+func _RouterService_StartLocalEngine_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(RouterServiceServer).StartLocalEngine(&routerServiceStartLocalEngineServer{stream})
 }
 
-type SwitchService_StartLocalEngineServer interface {
+type RouterService_StartLocalEngineServer interface {
 	SendAndClose(*StartEngineResponse) error
 	Recv() (*StartLocalEngineRequest, error)
 	grpc.ServerStream
 }
 
-type switchServiceStartLocalEngineServer struct {
+type routerServiceStartLocalEngineServer struct {
 	grpc.ServerStream
 }
 
-func (x *switchServiceStartLocalEngineServer) SendAndClose(m *StartEngineResponse) error {
+func (x *routerServiceStartLocalEngineServer) SendAndClose(m *StartEngineResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *switchServiceStartLocalEngineServer) Recv() (*StartLocalEngineRequest, error) {
+func (x *routerServiceStartLocalEngineServer) Recv() (*StartLocalEngineRequest, error) {
 	m := new(StartLocalEngineRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -291,180 +291,180 @@ func (x *switchServiceStartLocalEngineServer) Recv() (*StartLocalEngineRequest, 
 	return m, nil
 }
 
-func _SwitchService_StartFromPreviousEngine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RouterService_StartFromPreviousEngine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StartFromPreviousEngineRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SwitchServiceServer).StartFromPreviousEngine(ctx, in)
+		return srv.(RouterServiceServer).StartFromPreviousEngine(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.SwitchService/StartFromPreviousEngine",
+		FullMethod: "/v1.RouterService/StartFromPreviousEngine",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SwitchServiceServer).StartFromPreviousEngine(ctx, req.(*StartFromPreviousEngineRequest))
+		return srv.(RouterServiceServer).StartFromPreviousEngine(ctx, req.(*StartFromPreviousEngineRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SwitchService_StartEngine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RouterService_StartEngine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StartEngineRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SwitchServiceServer).StartEngine(ctx, in)
+		return srv.(RouterServiceServer).StartEngine(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.SwitchService/StartEngine",
+		FullMethod: "/v1.RouterService/StartEngine",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SwitchServiceServer).StartEngine(ctx, req.(*StartEngineRequest))
+		return srv.(RouterServiceServer).StartEngine(ctx, req.(*StartEngineRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SwitchService_ListEngines_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RouterService_ListEngines_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListEnginesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SwitchServiceServer).ListEngines(ctx, in)
+		return srv.(RouterServiceServer).ListEngines(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.SwitchService/ListEngines",
+		FullMethod: "/v1.RouterService/ListEngines",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SwitchServiceServer).ListEngines(ctx, req.(*ListEnginesRequest))
+		return srv.(RouterServiceServer).ListEngines(ctx, req.(*ListEnginesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SwitchService_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _RouterService_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(SubscribeRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(SwitchServiceServer).Subscribe(m, &switchServiceSubscribeServer{stream})
+	return srv.(RouterServiceServer).Subscribe(m, &routerServiceSubscribeServer{stream})
 }
 
-type SwitchService_SubscribeServer interface {
+type RouterService_SubscribeServer interface {
 	Send(*SubscribeResponse) error
 	grpc.ServerStream
 }
 
-type switchServiceSubscribeServer struct {
+type routerServiceSubscribeServer struct {
 	grpc.ServerStream
 }
 
-func (x *switchServiceSubscribeServer) Send(m *SubscribeResponse) error {
+func (x *routerServiceSubscribeServer) Send(m *SubscribeResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _SwitchService_GetEngine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RouterService_GetEngine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetEngineRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SwitchServiceServer).GetEngine(ctx, in)
+		return srv.(RouterServiceServer).GetEngine(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.SwitchService/GetEngine",
+		FullMethod: "/v1.RouterService/GetEngine",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SwitchServiceServer).GetEngine(ctx, req.(*GetEngineRequest))
+		return srv.(RouterServiceServer).GetEngine(ctx, req.(*GetEngineRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SwitchService_Listen_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _RouterService_Listen_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListenRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(SwitchServiceServer).Listen(m, &switchServiceListenServer{stream})
+	return srv.(RouterServiceServer).Listen(m, &routerServiceListenServer{stream})
 }
 
-type SwitchService_ListenServer interface {
+type RouterService_ListenServer interface {
 	Send(*ListenResponse) error
 	grpc.ServerStream
 }
 
-type switchServiceListenServer struct {
+type routerServiceListenServer struct {
 	grpc.ServerStream
 }
 
-func (x *switchServiceListenServer) Send(m *ListenResponse) error {
+func (x *routerServiceListenServer) Send(m *ListenResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _SwitchService_StopEngine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RouterService_StopEngine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StopEngineRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SwitchServiceServer).StopEngine(ctx, in)
+		return srv.(RouterServiceServer).StopEngine(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.SwitchService/StopEngine",
+		FullMethod: "/v1.RouterService/StopEngine",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SwitchServiceServer).StopEngine(ctx, req.(*StopEngineRequest))
+		return srv.(RouterServiceServer).StopEngine(ctx, req.(*StopEngineRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// SwitchService_ServiceDesc is the grpc.ServiceDesc for SwitchService service.
+// RouterService_ServiceDesc is the grpc.ServiceDesc for RouterService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var SwitchService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.SwitchService",
-	HandlerType: (*SwitchServiceServer)(nil),
+var RouterService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.RouterService",
+	HandlerType: (*RouterServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "StartFromPreviousEngine",
-			Handler:    _SwitchService_StartFromPreviousEngine_Handler,
+			Handler:    _RouterService_StartFromPreviousEngine_Handler,
 		},
 		{
 			MethodName: "StartEngine",
-			Handler:    _SwitchService_StartEngine_Handler,
+			Handler:    _RouterService_StartEngine_Handler,
 		},
 		{
 			MethodName: "ListEngines",
-			Handler:    _SwitchService_ListEngines_Handler,
+			Handler:    _RouterService_ListEngines_Handler,
 		},
 		{
 			MethodName: "GetEngine",
-			Handler:    _SwitchService_GetEngine_Handler,
+			Handler:    _RouterService_GetEngine_Handler,
 		},
 		{
 			MethodName: "StopEngine",
-			Handler:    _SwitchService_StopEngine_Handler,
+			Handler:    _RouterService_StopEngine_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "StartLocalEngine",
-			Handler:       _SwitchService_StartLocalEngine_Handler,
+			Handler:       _RouterService_StartLocalEngine_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Subscribe",
-			Handler:       _SwitchService_Subscribe_Handler,
+			Handler:       _RouterService_Subscribe_Handler,
 			ServerStreams: true,
 		},
 		{
 			StreamName:    "Listen",
-			Handler:       _SwitchService_Listen_Handler,
+			Handler:       _RouterService_Listen_Handler,
 			ServerStreams: true,
 		},
 	},

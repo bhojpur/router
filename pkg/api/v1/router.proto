@@ -4,7 +4,7 @@ package v1;
 option go_package = "github.com/bhojpur/router/pkg/api/v1";
 import "google/protobuf/timestamp.proto";
 
-service SwitchService {
+service RouterService {
     // StartLocalEngine starts a Routing Engine on the Bhojpur.NET Platform directly.
     // The incoming requests are expected in the following order:
     //   1. metadata
